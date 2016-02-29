@@ -5,6 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var ili9341 = require('jsupm_ili9341');
+var lcd = new ili9341.ILI9341(10, 38, 9, 14);
+
+lcd.fillScreen(lcd.color565(0, 40, 16));
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
