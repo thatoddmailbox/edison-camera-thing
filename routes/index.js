@@ -94,42 +94,39 @@ router.get("/cron", function(req, res, next) {
         var fs = require("fs");
         var request = require("request");
         var md5 = crypto.createHash('md5').update(fs.readFileSync(path + filename)).digest('hex');
-        var formData = {
-            file: fs.createReadStream(path + filename),
-            options: {
-                filename: filename,
-                contentType: 'image/jpeg'
-            }
-        };
-        request.post({
-            url: "http://aserv-cloud.cloudapp.net/fpc/uploadFile.php",
-            formData: formData
-        }, function(err, httpResponse, body) {
-            if (err !== null) {
+
+        fs.stat(path + filename, function(err, stats) {
+            restler.post("http://aserv-cloud.cloudapp.net/fpc/uploadFile.php", {
+                multipart: true,
+                data: {
+                    "folder_id": "0",
+                    "filename": restler.file(filename, null, stats.size, null, "image/jpeg")
+                }
+            }).on("complete", function(data) {
+                var resp = JSON.parse(body);
+                if (resp.status == "error") {
+                    res.json({
+                        status: "error",
+                        er: resp
+                    });
+                    return;
+                }
+                if (resp.hash === md5) {
+                    res.json({
+                        status: "ok",
+                    });
+                } else {
+                    res.json({
+                        status: "error",
+                        msg: "MD5 failure!"
+                    });
+                }
+            }).on("error", function(e) {
                 res.json({
                     status: "error",
-                    err: err
+                    err: e
                 });
-                return;
-            }
-            var resp = JSON.parse(body);
-            if (resp.status == "error") {
-                res.json({
-                    status: "error",
-                    er: resp
-                });
-                return;
-            }
-            if (resp.hash === md5) {
-                res.json({
-                    status: "ok",
-                });
-            } else {
-                res.json({
-                    status: "error",
-                    msg: "MD5 failure!"
-                });
-            }
+            });
         });
     }, function(err) {
         res.json({
