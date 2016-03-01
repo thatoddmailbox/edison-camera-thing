@@ -48,6 +48,7 @@ app.use("/", routes);
 app.use("/failed-uploads", global.verifyLogin, serveIndex("/home/root/camera/failed-uploads", {'icons': true}), express.static("/home/root/camera/failed-uploads"));
 app.use("/forced-pictures", global.verifyLogin, serveIndex("/home/root/camera/forced-pictures", {'icons': true}), express.static("/home/root/camera/forced-pictures"));
 app.use("/tmp", global.verifyLogin, serveIndex("/home/root/camera/tmp", {'icons': true}), express.static("/home/root/camera/tmp"));
+app.use("/cron.log", global.verifyLogin, express.static("/home/root/camera/cron.log"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
