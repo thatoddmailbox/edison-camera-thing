@@ -53,7 +53,8 @@ var sess = {
 app.use(session(sess));
 
 app.use("/", routes);
-app.use("/", global.verifyLogin, serveIndex("/home/root/camera/", {'icons': true}));
+app.use("/failed-uploads", global.verifyLogin, serveIndex("/home/root/camera/failed-uploads", {'icons': true}), express.static("/home/root/camera/failed-uploads"));
+app.use("/forced-pictures", global.verifyLogin, serveIndex("/home/root/camera/forced-pictures", {'icons': true}), express.static("/home/root/camera/forced-pictures"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
