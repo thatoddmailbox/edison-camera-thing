@@ -93,7 +93,7 @@ router.get("/cron", function(req, res, next) {
         var crypto = require('crypto');
         var md5 = crypto.createHash('md5').update(fs.readFileSync(path + filename)).digest('hex');
         var formData = {
-            file: fs.createReadStream(path + filename)
+            file: fs.createReadStream(path + filename),
             options: {
                 filename: filename,
                 contentType: 'image/jpeg'
