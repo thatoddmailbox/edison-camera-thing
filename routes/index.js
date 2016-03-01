@@ -92,7 +92,7 @@ router.get("/cron", function(req, res, next) {
         // calculate hash
         var crypto = require('crypto');
         var fs = require("fs");
-        var request = require("request");
+        var restler = require("restler");
         var md5 = crypto.createHash('md5').update(fs.readFileSync(path + filename)).digest('hex');
 
         fs.stat(path + filename, function(err, stats) {
