@@ -17,7 +17,11 @@ backlightPin.dir(mraa.DIR_IN);
 lcd.fillScreen(lcd.color565(255, 255, 255));
 
 global.verifyLogin = function(req, res, next) {
-
+    if (req.session.username && req.session.loggedIn) {
+        next();
+    } else {
+        res.redirect("/login");
+    }
 };
 
 var routes = require('./routes/index');
