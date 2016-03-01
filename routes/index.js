@@ -112,6 +112,7 @@ router.get("/cron", function(req, res, next) {
                     return;
                 }
                 if (resp.hash === md5) {
+                    fs.unlinkSync(path + filename);
                     res.json({
                         status: "ok",
                     });
