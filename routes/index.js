@@ -92,6 +92,7 @@ router.get("/cron", function(req, res, next) {
         // calculate hash
         var crypto = require('crypto');
         var fs = require("fs");
+        var request = require("request");
         var md5 = crypto.createHash('md5').update(fs.readFileSync(path + filename)).digest('hex');
         var formData = {
             file: fs.createReadStream(path + filename),
