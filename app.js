@@ -42,7 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var sess = {
-	store: new FileStore(options),
+	store: new FileStore({}),
 	secret: 'keyboard cat',
 	cookie: {}
 };
