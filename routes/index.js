@@ -39,6 +39,16 @@ router.get("/force-picture", global.verifyLogin, function(req, res, next) {
     });
 });
 
+router.get("/timer-status", global.verifyLogin, function(req, res, next) {
+    exec("systemctl status camera-cron.timer", function(err, stdout, stderr) {
+        if (err) {
+            res.end("Error! " + err);
+            return;
+        }
+        res.end(stdout);
+    });
+});
+
 router.get("/login", function(req, res, next) {
     res.render("login", { title: "Log in" });
 });
