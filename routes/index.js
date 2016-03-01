@@ -103,6 +103,7 @@ router.get("/cron", function(req, res, next) {
                     "filename": restler.file(path + filename, null, stats.size, null, "image/jpeg")
                 }
             }).on("complete", function(data) {
+                console.log(data);
                 var resp = JSON.parse(data);
                 if (resp.status == "error") {
                     res.json({
@@ -114,7 +115,7 @@ router.get("/cron", function(req, res, next) {
                 if (resp.hash === md5) {
                     fs.unlinkSync(path + filename);
                     res.json({
-                        status: "ok",
+                        status: "ok"
                     });
                 } else {
                     res.json({
