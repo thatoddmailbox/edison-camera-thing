@@ -1,10 +1,36 @@
 var express = require('express');
 var router = express.Router();
 
+var sys = require('sys')
+var exec = require('child_process').exec;
+
 var roux = require("../roux");
+
+var takePicture = function(folder, name, done, err) {
+    var command = "/home/root/bin/ffmpeg/ffmpeg -s 1920x1080 -f video4linux2 -i /dev/video0 -vframes 1";
+    command += folder; // I know, command injection. But this should be trusted input, so.
+    command += name;
+    exec(command, function(error, stdout, stderr) {
+        if (error !== null) {
+            err(error);
+            return;
+        }
+        if (stdout.indexOf("muxing overhead: unknown") > -1) {
+            done()
+        }
+    });
+};
 
 router.get("/", global.verifyLogin, function(req, res, next) {
     res.render("index", { title: "Edison Camera Thing" });
+});
+
+router.get("/force-picture", global.verifyLogin, function(req, res, next) {
+    takePicture("/home/root/camera/forced-pictures/", getPictureFn(), function() {
+        res.end(200, "Done!");
+    }, function(err) {
+        res.end(500, "Error taking picture!");
+    });
 });
 
 router.get("/login", function(req, res, next) {
