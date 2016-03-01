@@ -100,7 +100,7 @@ router.get("/cron", function(req, res, next) {
                 multipart: true,
                 data: {
                     "submit": "Ok",
-                    "filename": restler.file(path + filename, null, stats.size, null, "image/jpeg")
+                    "file": restler.file(path + filename, null, stats.size, null, "image/jpeg")
                 },
                 parser: function(data, callback) {
                     callback(null, data);
