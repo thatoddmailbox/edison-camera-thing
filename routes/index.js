@@ -33,6 +33,7 @@ router.get("/force-picture", global.verifyLogin, function(req, res, next) {
     takePicture("/home/root/camera/forced-pictures/", getPictureFn(), function() {
         res.end("Done!");
     }, function(err) {
+        console.error(err);
         res.end("Error taking picture!");
     });
 });
