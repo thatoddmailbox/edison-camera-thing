@@ -53,8 +53,7 @@ var sess = {
 app.use(session(sess));
 
 app.use("/", routes);
-app.use("/failed-uploads", global.verifyLogin, serveIndex("/home/root/camera/failed-uploads", {'icons': true}));
-app.use("/forced-pictures", global.verifyLogin, serveIndex("/home/root/camera/forced-pictures", {'icons': true}));
+app.use("/", global.verifyLogin, serveIndex("/home/root/camera/", {'icons': true}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
