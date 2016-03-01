@@ -21,6 +21,10 @@ var takePicture = function(folder, name, done, err) {
     });
 };
 
+var getPictureFn = function() {
+    return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + ".jpeg";
+};
+
 router.get("/", global.verifyLogin, function(req, res, next) {
     res.render("index", { title: "Edison Camera Thing" });
 });
