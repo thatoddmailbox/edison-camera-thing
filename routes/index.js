@@ -82,7 +82,59 @@ router.get("/logout", global.verifyLogin, function(req, res, next) {
 });
 
 router.get("/cron", function(req, res, next) {
-    res.end(req.connection.remoteAddress);
+    if (req.connection.remoteAddress != "127.0.0.1") {
+        res.end("go away, no one likes you");
+        return;
+    }
+    var path = "/home/root/camera/tmp/";
+    var filename = getPictureFn();
+    takePicture(path, filename, function() {
+        // calculate hash
+        var crypto = require('crypto');
+        var md5 = crypto.createHash('md5').update(fs.readFileSync(path + filename)).digest('hex');
+        var formData = {
+            file: fs.createReadStream(path + filename)
+            options: {
+                filename: filename,
+                contentType: 'image/jpeg'
+            }
+        };
+        request.post({
+            url: "http://aserv-cloud.cloudapp.net/wfp/uploadFile.php",
+            formData: formData
+        }, function(err, httpResponse, body) {
+            if (err !== null) {
+                res.json({
+                    status: "error",
+                    err: err
+                });
+                return;
+            }
+            var resp = JSON.parse(body);
+            if (resp.status == "error") {
+                res.json({
+                    status: "error",
+                    er: resp
+                });
+                return;
+            }
+            if (resp.hash === md5) {
+                res.json({
+                    status: "ok",
+                });
+            } else {
+                res.json({
+                    status: "error",
+                    msg: "MD5 failure!"
+                });
+            }
+        });
+    }, function(err) {
+        res.json({
+            status: "error",
+            error: err
+        });
+    });
 });
 
 module.exports = router;
