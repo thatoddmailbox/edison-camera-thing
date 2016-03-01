@@ -7,9 +7,11 @@ var exec = require('child_process').exec;
 var roux = require("../roux");
 
 var takePicture = function(folder, name, done, err) {
-    var command = "/home/root/bin/ffmpeg/ffmpeg -s 1920x1080 -f video4linux2 -i /dev/video0 -vframes 1";
+    var command = "/home/root/bin/ffmpeg/ffmpeg -s 1920x1080 -f video4linux2 -i /dev/video0 -vframes 1 ";
+    command += "\"";
     command += folder; // I know, command injection. But this should be trusted input, so.
     command += name;
+    command += "\"";
     exec(command, function(error, stdout, stderr) {
         if (error !== null) {
             err(error);
