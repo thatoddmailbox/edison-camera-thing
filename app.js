@@ -8,13 +8,9 @@ var bodyParser = require('body-parser');
 global.mraa = require('mraa');
 var ili9341 = require('jsupm_ili9341');
 global.lcd = new ili9341.ILI9341(10, 1, 9, 14);
-global.backlightPin = new mraa.Pwm(5);
+global.backlightPin = new mraa.Gpio(5);
 
-backlightPin.dir(mraa.DIR_OUT);
-backlightPin.write(1.0);
-setTimeout(function() {
-    backlightPin.write(0.5);
-}, 1000);
+backlightPin.dir(mraa.DIR_IN);
 lcd.fillScreen(lcd.color565(255, 0, 0));
 
 var routes = require('./routes/index');
