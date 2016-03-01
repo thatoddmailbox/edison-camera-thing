@@ -106,6 +106,7 @@ router.get("/cron", function(req, res, next) {
                     callback(null, data);
                 }
             }).on("complete", function(data) {
+                console.log("hex");
                 console.log(data);
                 var resp = JSON.parse(data);
                 if (resp.status == "error") {
