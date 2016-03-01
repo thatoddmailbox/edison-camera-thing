@@ -20,6 +20,7 @@ backlightPin.dir(mraa.DIR_IN);
 
 global.verifyLogin = function(req, res, next) {
     if (req.session.username && req.session.loggedIn) {
+        res.locals.username = req.session.username;
         next();
     } else {
         res.redirect("/login");
@@ -53,6 +54,7 @@ app.use(session(sess));
 
 app.use("/", routes);
 app.use("/failed-uploads", global.verifyLogin, serveIndex("/home/root/camera/failed-uploads", {'icons': true}));
+app.use("/forced-pictures", global.verifyLogin, serveIndex("/home/root/camera/forced-pictures", {'icons': true}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

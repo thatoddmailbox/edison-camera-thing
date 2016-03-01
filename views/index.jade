@@ -1,7 +1,13 @@
 extends layout
 
 block content
-    h1 Edison Camera Thing
+    h1 Fast Plants Camera
     span Hello, #{username}! 
     a(href="/logout", class="btn btn-default") Log out
-    
+    ul
+        li
+            a(href="/failed-uploads") View failed uploads
+        li
+            a(href="/force-picture") Force picture
+        li
+            a(href="/forced-pictures") View forced pictures
