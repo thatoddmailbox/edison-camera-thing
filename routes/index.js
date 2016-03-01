@@ -100,7 +100,7 @@ router.get("/cron", function(req, res, next) {
             }
         };
         request.post({
-            url: "http://aserv-cloud.cloudapp.net/wfp/uploadFile.php",
+            url: "http://aserv-cloud.cloudapp.net/fpc/uploadFile.php",
             formData: formData
         }, function(err, httpResponse, body) {
             if (err !== null) {
