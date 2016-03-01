@@ -26,9 +26,14 @@ router.post("/login", function(req, res, next) {
 	dataStr += password.encodeHTML();
 	dataStr += "</password></credentials>";
 
+    console.log("start auth");
 	roux.request("", "authenticate", dataStr, function(err) {
+        console.log("ugh");
+        console.log(err);
         res.render("login", { title: "Log in", error: "Invalid username/password combination." });
 	}, function(data) {
+        console.log("yay");
+        console.log(data);
 		var key = data["response"]["result"][0]["key"][0]["_"];
 		var owner = data["response"]["result"][0]["key"][0]["$"]["owner"];
 
