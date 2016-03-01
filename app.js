@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var serveIndex = require('serve-index');
+
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
@@ -49,8 +51,8 @@ var sess = {
 
 app.use(session(sess));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use("/", routes);
+app.use("/failed-uploads", global.verifyLogin, serveIndex("/home/root/camera/failed-uploads", {'icons': true}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
