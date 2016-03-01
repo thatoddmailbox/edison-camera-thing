@@ -16,9 +16,7 @@ var takePicture = function(folder, name, done, err) {
         if (error !== null) {
             err(error);
             return;
-        }
-        console.log(stdout);
-        if (stdout.indexOf("muxing overhead: unknown") > -1) {
+        } else {
             done();
         }
     });
