@@ -81,4 +81,8 @@ router.get("/logout", global.verifyLogin, function(req, res, next) {
     res.redirect("/");
 });
 
+router.get("/cron", function(req, res, next) {
+    res.end(req.connection.remoteAddress);
+});
+
 module.exports = router;
