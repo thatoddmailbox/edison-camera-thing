@@ -103,7 +103,7 @@ router.get("/cron", function(req, res, next) {
                     "filename": restler.file(path + filename, null, stats.size, null, "image/jpeg")
                 }
             }).on("complete", function(data) {
-                var resp = JSON.parse(body);
+                var resp = JSON.parse(data);
                 if (resp.status == "error") {
                     res.json({
                         status: "error",
