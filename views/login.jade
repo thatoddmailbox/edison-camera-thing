@@ -2,6 +2,9 @@ extends layout
 
 block content
 	h1 Log In
+	p This is an Internet-connected camera used to monitor the growth of Wisconsin Fast Plants in soil with different pH levels.
+	p For more information, please contact 
+		a(href="mailto:c19as3@dalton.org") Alexander Studer.
 	form(action="/login", method="POST")
 		input(type="text", name="username", placeholder="Username", class="form-control")
 		input(type="password", name="password", placeholder="Password", class="form-control")

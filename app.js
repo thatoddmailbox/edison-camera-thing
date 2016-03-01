@@ -14,7 +14,7 @@ global.lcd = new ili9341.ILI9341(10, 1, 9, 14);
 global.backlightPin = new mraa.Gpio(5);
 
 backlightPin.dir(mraa.DIR_IN);
-lcd.fillScreen(lcd.color565(255, 255, 255));
+//lcd.fillScreen(lcd.color565(255, 255, 255));
 
 global.verifyLogin = function(req, res, next) {
     if (req.session.username && req.session.loggedIn) {
