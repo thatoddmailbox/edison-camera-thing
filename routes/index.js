@@ -101,6 +101,9 @@ router.get("/cron", function(req, res, next) {
                 data: {
                     "folder_id": "0",
                     "filename": restler.file(path + filename, null, stats.size, null, "image/jpeg")
+                },
+                parse: function(data, callback) {
+                    callback(null, data);
                 }
             }).on("complete", function(data) {
                 console.log(data);
