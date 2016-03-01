@@ -99,14 +99,13 @@ router.get("/cron", function(req, res, next) {
             restler.post("http://aserv-cloud.cloudapp.net/fpc/uploadFile.php", {
                 multipart: true,
                 data: {
-                    "folder_id": "0",
+                    "submit": "Ok",
                     "filename": restler.file(path + filename, null, stats.size, null, "image/jpeg")
                 },
                 parser: function(data, callback) {
                     callback(null, data);
                 }
             }).on("complete", function(data) {
-                console.log("hex");
                 console.log(data);
                 var resp = JSON.parse(data);
                 if (resp.status == "error") {
